@@ -1,6 +1,6 @@
 {
     "name": "michael/laravel-youtube",
-    "description": "Biblioteca de integração com o Google e YouTube",
+    "description": "Biblioteca de integração com o YouTube",
     "keywords": ["framework", "laravel", "Google", "YouTube"],
     "type": "library",
     "require": {
