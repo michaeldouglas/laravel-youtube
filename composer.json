@@ -33,7 +33,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Laravel\\Youtube\\ServiceProvider"
+                "Laravel\\Youtube\\YoutubeServiceProvider"
             ],
             "aliases": {
                 "YouTube": "Laravel\\Youtube\\Facades\\Youtube"

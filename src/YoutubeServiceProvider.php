@@ -4,7 +4,7 @@ namespace Laravel\Youtube;
 
 use Illuminate\Support\ServiceProvider;
 
-class ServiceProvider extends ServiceProvider
+class YoutubeServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
