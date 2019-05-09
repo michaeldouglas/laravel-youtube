@@ -1,5 +1,5 @@
 {
-    "name": "michael/laravel-pagseguro",
+    "name": "michael/laravel-youtube",
     "description": "Biblioteca de integração com o Google e YouTube",
     "keywords": ["framework", "laravel", "Google", "YouTube"],
     "type": "library",

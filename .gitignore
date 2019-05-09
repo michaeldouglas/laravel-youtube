@@ -17,6 +17,7 @@ Homestead.yaml
 Homestead.json
 example/.env
 .idea
+testAPP
 
 # Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
 .rocketeer/
