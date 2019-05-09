@@ -12,7 +12,7 @@
 Abra o arquivo `composer.json` e insira a seguinte instrução:
  
      "require": {
-         "michael/laravelyoutube": "dev-master"
+         "michael/laravel-youtube": "0.0.1"
      }
      
      
@@ -23,7 +23,7 @@ Após inserir no require a `Laravel YouTube`, você deverá executar o comando:
     
 Ou execute o comando:
 
-    composer require michael/laravelyoutube:dev-master
+    composer require michael/laravel-youtube
     
     
 ## Criação do configurador
