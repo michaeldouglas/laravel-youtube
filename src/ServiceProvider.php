@@ -16,7 +16,9 @@ class ServiceProvider extends ServiceProvider
     public function boot()
     {
         $config = realpath(__DIR__.'/../config/youtube.php');
+
         $this->publishes([$config => config_path('youtube.php')], 'config');
+
         $this->mergeConfigFrom($config, 'youtube');
     }
 
