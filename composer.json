@@ -29,7 +29,7 @@
         "phpunit/phpunit": "^7.5",
         "vlucas/phpdotenv": "^3.3"
     },
-    "minimum-stability": "0.0.1",
+    "minimum-stability": "dev",
     "extra": {
         "laravel": {
             "providers": [
