@@ -20,7 +20,7 @@ class Database
             ->latest('created_at')
             ->first();
 
-        $this->verifyToken($token);
+        return $this->verifyToken($token);
     }
 
     private function verifyToken($token)

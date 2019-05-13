@@ -79,7 +79,7 @@ Laravel, segue o `SQL`:
 ```sql
 CREATE TABLE `direct`.`youtubeTokens` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `access_token` VARCHAR(255) NOT NULL,
+  `access_token` TEXT NOT NULL,
   `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NULL DEFAULT NULL,
   `deleted_at` TIMESTAMP NULL DEFAULT NULL,
