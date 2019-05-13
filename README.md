@@ -2,7 +2,7 @@
 
 ![Laravel YouTube](logo.png)
 
-**Atention:** Documentation in english please click for here
+**Atention:** `Documentation in english please` [click for here](README-EN.md)
 
 O **laravel-youtube** consome a API do **YouTube** e prove uma forma simples de 
 gerar e manipular seus videos no YouTube. 
