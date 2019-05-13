@@ -57,7 +57,7 @@ Youtube' => Laravel\Youtube\Facades\Youtube::class
 Agora você irá executar o comando:
 
 ```php
-php artisan vendor:publish
+php artisan vendor:publish --provider="Laravel\Youtube\YoutubeServiceProvider"
 ```
 
 Se tudo ocorreu bem, a seguinte mensagem sera exibida:
