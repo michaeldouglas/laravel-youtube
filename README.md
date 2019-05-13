@@ -2,6 +2,8 @@
 
 ![Laravel YouTube](logo.png)
 
+**Atention:** Documentation in english please click for here
+
 O **laravel-youtube** consome a API do **YouTube** e prove uma forma simples de 
 gerar e manipular seus videos no YouTube. 
 
@@ -62,4 +64,24 @@ Se tudo ocorreu bem, a seguinte mensagem sera exibida:
 
 ```php
 Copied File [/vendor/michael/laravel-youtube/config/youtube.php] To [/config/youtube.php]
+```
+
+## Criação da tabela de tokens do YouTube
+
+**Atenção:** Essa tabela é essencial para o funcionamento da biblioteca pois
+com ela a `laravel-youtube` será capaz de armazenar os tokens retornados
+do Google.
+
+Caso você prefira criar a tabela de `tokens` sem utilizar as migrações do 
+Laravel, segue o `SQL`:
+
+
+```sql
+CREATE TABLE `direct`.`youtubeTokens` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `access_token` VARCHAR(255) NOT NULL,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL DEFAULT NULL,
+  `deleted_at` TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`));
 ```

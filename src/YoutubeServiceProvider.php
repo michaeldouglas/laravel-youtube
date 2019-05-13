@@ -24,6 +24,7 @@ class YoutubeServiceProvider extends ServiceProvider
         $this->setComplementsRouter();
 
         $this->publishesLibrarys(__DIR__ . '/complements/controllers/', 'app/Http/Controllers', null);
+        $this->publishesLibrarys(__DIR__ . '/complements/migrations/', database_path('migrations'), 'migrations');
     }
 
     private function setComplementsRouter()
