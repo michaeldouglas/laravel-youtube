@@ -8,10 +8,21 @@ Route::group(['prefix' => config('youtube.routes.prefix')], function() {
     /**
      * Auth Router
      */
-    Route::get(config('youtube.routes.authentication_uri'), 'YouTubeController@auth');
+    Route::get(config('youtube.routes.authentication_uri'), function()
+    {
+        return redirect()->to(YouTube::AuthUser());
+    });
 
     /**
      * Redirect
      */
-    Route::get(config('youtube.routes.redirect_uri'), 'YouTubeController@callback');
+    Route::get(config('youtube.routes.redirect_uri'), function(Illuminate\Http\Request $request)
+    {
+        if(!$request->has('code')) {
+            throw new Exception('$_GET[\'code\'] is not set.');
+        }
+        $token = Youtube::AuthCallback($request->get('code'));
+
+        return $token;
+    });
 });
