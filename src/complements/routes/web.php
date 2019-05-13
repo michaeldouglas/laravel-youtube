@@ -21,9 +21,9 @@ Route::group(['prefix' => config('youtube.routes.prefix')], function() {
         if(!$request->has('code')) {
             throw new Exception('$_GET[\'code\'] is not set.');
         }
-        $token = Youtube::AuthCallback($request->get('code'));
+        $token = YouTube::AuthCallback($request->get('code'));
 
-        Youtube::saveTokenCallBack($token);
+        YouTube::saveTokenCallBack($token);
 
         return redirect(config('youtube.routes.redirect_back_uri', '/'));
     });
