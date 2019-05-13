@@ -26,6 +26,8 @@ return [
         'https://www.googleapis.com/auth/youtube.force-ssl'
     ],
 
+    'redirect_auth' => true,
+
     /**
      * Routes
      */

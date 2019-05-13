@@ -23,6 +23,8 @@ Route::group(['prefix' => config('youtube.routes.prefix')], function() {
         }
         $token = Youtube::AuthCallback($request->get('code'));
 
-        return $token;
+        Youtube::saveTokenCallBack($token);
+
+        return redirect(config('youtube.routes.redirect_back_uri', '/'));
     });
 });

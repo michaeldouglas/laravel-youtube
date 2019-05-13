@@ -6,6 +6,7 @@ use Google_Client;
 use Google_Service_YouTube;
 
 use Laravel\Youtube\Configuration\Setup;
+use Laravel\Youtube\Database\Database;
 
 class Youtube
 {
@@ -25,6 +26,13 @@ class Youtube
     protected $client;
 
     /**
+     * DB Client
+     *
+     * @var Database
+     */
+    protected $db;
+
+    /**
      * Google YouTube
      *
      * @var \Google_Service_YouTube
@@ -37,6 +45,8 @@ class Youtube
 
         $this->client = (new Setup($app, $client))->getClient();
 
+        $this->db = new Database();
+
         $this->youtube = new Google_Service_YouTube($this->client);
     }
 
@@ -45,11 +55,22 @@ class Youtube
         $this->userToken();
     }
 
+    public function saveTokenCallBack($token)
+    {
+        $this->db->saveToken($token);
+    }
+
+    /**
+     * @throws \Exception
+     */
     private function userToken()
     {
-        dd(get_class_methods($this->client));
-        die;
         if (is_null($accessToken = $this->client->getAccessToken())) {
+            if($this->app->config->get('youtube.redirect_auth')){
+                $uri = $this->client->getRedirectUri();
+                header("Location $uri");
+            }
+
             throw new \Exception('An access token is required.');
         }
 
@@ -58,6 +79,7 @@ class Youtube
             if (array_key_exists('refresh_token', $accessToken))
             {
                 $this->client->refreshToken($accessToken['refresh_token']);
+                $this->db->saveToken($this->client->getAccessToken());
             }
         }
     }
