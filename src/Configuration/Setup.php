@@ -3,6 +3,10 @@
 namespace Laravel\Youtube\Configuration;
 
 use Google_Client;
+use Google_Service_YouTube_LiveBroadcast;
+use Google_Service_YouTube_LiveBroadcastContentDetails;
+use Google_Service_YouTube_LiveBroadcastSnippet;
+use Google_Service_YouTube_LiveBroadcastStatus;
 use Exception;
 
 class Setup
@@ -62,5 +66,40 @@ class Setup
         $client->setRedirectUri(secure_url($this->prefix . '/' . $this->redirect_uri));
 
         $this->client = $client;
+    }
+
+    public function getClientBroadcasting(String $intialDate, String $endDate, String $titleEvent, String $privacy)
+    {
+        return $this->setClientBroadcasting($intialDate, $endDate, $titleEvent, $privacy);
+    }
+
+    private function setClientBroadcasting(String $intialDate, String $endDate, String $titleEvent, String $privacy)
+    {
+        // Define the $liveBroadcast object, which will be uploaded as the request body.
+        $liveBroadcast = new Google_Service_YouTube_LiveBroadcast();
+
+        // Add 'contentDetails' object to the $liveBroadcast object.
+        $liveBroadcastContentDetails = new Google_Service_YouTube_LiveBroadcastContentDetails();
+        $liveBroadcastContentDetails->setEnableClosedCaptions(true);
+        $liveBroadcastContentDetails->setEnableContentEncryption(true);
+        $liveBroadcastContentDetails->setEnableDvr(true);
+        $liveBroadcastContentDetails->setEnableEmbed(true);
+        $liveBroadcastContentDetails->setRecordFromStart(true);
+        $liveBroadcastContentDetails->setStartWithSlate(true);
+        $liveBroadcast->setContentDetails($liveBroadcastContentDetails);
+
+        // Add 'snippet' object to the $liveBroadcast object.
+        $liveBroadcastSnippet = new Google_Service_YouTube_LiveBroadcastSnippet();
+        $liveBroadcastSnippet->setScheduledEndTime($endDate);
+        $liveBroadcastSnippet->setScheduledStartTime($intialDate);
+        $liveBroadcastSnippet->setTitle($titleEvent);
+        $liveBroadcast->setSnippet($liveBroadcastSnippet);
+
+        // Add 'status' object to the $liveBroadcast object.
+        $liveBroadcastStatus = new Google_Service_YouTube_LiveBroadcastStatus();
+        $liveBroadcastStatus->setPrivacyStatus($privacy);
+        $liveBroadcast->setStatus($liveBroadcastStatus);
+
+        return $liveBroadcast;
     }
 }

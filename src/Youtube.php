@@ -26,6 +26,13 @@ class Youtube
     protected $client;
 
     /**
+     * Google Client
+     *
+     * @var Setup
+     */
+    protected $setup;
+
+    /**
      * DB Client
      *
      * @var Database
@@ -43,7 +50,9 @@ class Youtube
     {
         $this->app = $app;
 
-        $this->client = (new Setup($app, $client))->getClient();
+        $this->setup = new Setup($app, $client);
+
+        $this->client = $this->setup->getClient();
 
         $this->db = new Database();
 
@@ -75,6 +84,32 @@ class Youtube
         $response = $this->youtube->videos->listVideos('status', ['id' => $id]);
 
         return !empty($response->items);
+    }
+
+    public function createEventRTMP(String $intialDate, String $endDate, String $titleEvent, String $privacy = 'unlisted')
+    {
+        $this->userToken();
+
+        $start = new \DateTime($intialDate);
+        $end = new \DateTime($endDate);
+
+        $liveBroadcast = $this->setup->getClientBroadcasting($start->format(\DateTime::ATOM), $end->format(\DateTime::ATOM), $titleEvent, $privacy);
+
+        $response = $this->youtube->liveBroadcasts->insert('snippet,contentDetails,status', $liveBroadcast);
+
+        return $response['status']->getLifeCycleStatus();
+    }
+
+    /**
+     * Get Details Based Id Video
+     * @param String $id
+     * @return array
+     */
+    public function getDetailsVideo(String $id)
+    {
+        $this->userToken();
+
+        return $this->youtube->videos->listVideos('snippet', ['id' => $id])[0]['snippet'];
     }
 
     /**
