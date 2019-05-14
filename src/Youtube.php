@@ -90,8 +90,8 @@ class Youtube
     {
         $this->userToken();
 
-        $start = new \DateTime($intialDate);
-        $end = new \DateTime($endDate);
+        $start = new \DateTime($intialDate, new \DateTimeZone($this->app->config->get('youtube.timezone')));
+        $end = new \DateTime($endDate, new \DateTimeZone($this->app->config->get('youtube.timezone')));
 
         $liveBroadcast = $this->setup->getClientBroadcasting($start->format(\DateTime::ATOM), $end->format(\DateTime::ATOM), $titleEvent, $privacy);
 

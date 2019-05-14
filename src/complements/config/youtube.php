@@ -26,7 +26,17 @@ return [
         'https://www.googleapis.com/auth/youtube.force-ssl'
     ],
 
+    /**
+     * Redirect
+     */
+
     'redirect_auth' => true,
+
+    /**
+     * TimeZone Events Live
+     */
+
+    'timezone' => 'America/Sao_Paulo',
 
     /**
      * Routes
