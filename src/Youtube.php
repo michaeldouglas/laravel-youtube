@@ -90,14 +90,9 @@ class Youtube
     {
         $this->userToken();
 
-        $start = new \DateTime($intialDate, new \DateTimeZone($this->app->config->get('youtube.timezone')));
-        $end = new \DateTime($endDate, new \DateTimeZone($this->app->config->get('youtube.timezone')));
+        $liveBroadcast = $this->setup->getClientBroadcasting($intialDate, $endDate, $titleEvent, $privacy, $this->youtube);
 
-        $liveBroadcast = $this->setup->getClientBroadcasting($start->format(\DateTime::ATOM), $end->format(\DateTime::ATOM), $titleEvent, $privacy);
-
-        $response = $this->youtube->liveBroadcasts->insert('snippet,contentDetails,status', $liveBroadcast);
-
-        return $response['status']->getLifeCycleStatus();
+        return $liveBroadcast;
     }
 
     /**
