@@ -22,7 +22,7 @@ vídeos no YouTube e criar o **RTMP** e **chave de transmissão** para uma trans
 Abra o arquivo `composer.json` e insira a seguinte instrução:
  
      "require": {
-         "michael/laravel-youtube": "0.0.1"
+         "michael/laravel-youtube": "0.0.12"
      }
      
      
