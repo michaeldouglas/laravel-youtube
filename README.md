@@ -1,4 +1,4 @@
-## Laravel YouTube - 0.0.1
+## Laravel YouTube - 0.0.12
 
 ![Laravel YouTube](logo.png)
 
