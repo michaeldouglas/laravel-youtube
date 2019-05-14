@@ -85,3 +85,54 @@ CREATE TABLE `direct`.`youtubeTokens` (
   `deleted_at` TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (`id`));
 ```
+
+Ou você pode executar a migração que o projeto irá instalar e para isso basta executar:
+
+```bash
+php artisan migrate
+```
+
+## Verificar se o video existe
+
+Para verificar se um video existe, basta, fornecer o id dele para 
+o método `checkExistVideo()`, da seguinte maneira:
+
+```php
+<?php 
+
+$id = "O ID DO VIDEO";
+$existVideo = YouTube::checkExistVideo($id);
+
+return ['status' => $existVideo];
+```
+
+## Obter detalhes do video
+
+Para obter detalhes de um video, basta, fornecer o id dele para 
+o método `checkExistVideo()`, da seguinte maneira:
+
+```php
+<?php 
+
+$id = "O ID DO VIDEO";
+$existVideo = YouTube::getDetailsVideo($id);
+
+return ["details" => $detailsVideo];
+```
+
+## Criação de eventos Ao Vivo
+
+Para criar um evento Ao Vivo, basta chamado o método `createEventRTMP()`
+e fornecer os parâmetros:
+
+  - Data de inicio
+  - Data de Termino
+  - Descrição do video
+  
+Exemplo de uso:
+
+```php
+<?php 
+
+YouTube::createEventRTMP("2019-05-13 22:00:00", "2019-05-13 23:00:00", "Evento teste");
+```
