@@ -4,6 +4,7 @@
 [![Total Downloads](https://poser.pugx.org/michael/laravel-youtube/downloads)](https://packagist.org/packages/michael/laravel-youtube)
 [![License](https://poser.pugx.org/michael/laravel-youtube/license)](https://packagist.org/packages/michael/laravel-youtube)
 [![Maintainability](https://api.codeclimate.com/v1/badges/bd5c0e5e25ae75c7189c/maintainability)](https://codeclimate.com/github/michaeldouglas/laravel-youtube/maintainability)
+[![Build Status](https://travis-ci.org/michaeldouglas/laravel-youtube.svg?branch=master)](https://travis-ci.org/michaeldouglas/laravel-youtube)
 
 ![Laravel YouTube](logo.png)
 
