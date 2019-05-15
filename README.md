@@ -19,7 +19,7 @@ vídeos no YouTube e criar o **RTMP** e **chave de transmissão** para uma trans
 
 ## Compatibilidade
 
- PHP >= 7.0
+ PHP >= 7.1
  Laravel 5.x
  
  
