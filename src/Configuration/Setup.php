@@ -133,7 +133,7 @@ class Setup
         $updateResponse = $objectYouTube->videos->update("snippet", $video);
         $response['video_response'] = $updateResponse;
 
-        //object of livestream resource [snippet][title]
+        //object of livestream resource title
         $googleYoutubeLiveStreamSnippet = new Google_Service_YouTube_LiveStreamSnippet;
         $googleYoutubeLiveStreamSnippet->setTitle($titleEvent);
 
@@ -141,7 +141,7 @@ class Setup
         $googleYoutubeCdnSettings->setFormat("1080p");
         $googleYoutubeCdnSettings->setIngestionType('rtmp');
 
-        // API request [inserts liveStream resource.]
+        // API request inserts liveStream resource.
         $googleYoutubeLiveStream = new Google_Service_YouTube_LiveStream;
         $googleYoutubeLiveStream->setSnippet($googleYoutubeLiveStreamSnippet);
         $googleYoutubeLiveStream->setCdn($googleYoutubeCdnSettings);
