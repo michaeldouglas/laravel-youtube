@@ -17,6 +17,9 @@ class Broadcast
     private $liveBroadcastContentDetails;
     private $liveBroadcastSnippet;
     private $liveBroadcastStatus;
+    private $googleYoutubeLiveStreamSnippet;
+    private $googleYoutubeCdnSettings;
+    private $googleYoutubeLiveStream;
     private $broadcastsResponse;
     private $youtubeEventId;
     private $intialDate;
@@ -26,14 +29,18 @@ class Broadcast
     private $response;
     private $youtube;
     private $video;
+    private $streamsResponse;
 
     public function __construct($app)
     {
-        $this->app                         = $app;
-        $this->liveBroadcast               = new Google_Service_YouTube_LiveBroadcast();
-        $this->liveBroadcastContentDetails = new Google_Service_YouTube_LiveBroadcastContentDetails();
-        $this->liveBroadcastSnippet        = new Google_Service_YouTube_LiveBroadcastSnippet();
-        $this->liveBroadcastStatus         = new Google_Service_YouTube_LiveBroadcastStatus();
+        $this->app                            = $app;
+        $this->liveBroadcast                  = new Google_Service_YouTube_LiveBroadcast();
+        $this->liveBroadcastContentDetails    = new Google_Service_YouTube_LiveBroadcastContentDetails();
+        $this->liveBroadcastSnippet           = new Google_Service_YouTube_LiveBroadcastSnippet();
+        $this->liveBroadcastStatus            = new Google_Service_YouTube_LiveBroadcastStatus();
+        $this->googleYoutubeLiveStreamSnippet = new Google_Service_YouTube_LiveStreamSnippet;
+        $this->googleYoutubeCdnSettings       = new Google_Service_YouTube_CdnSettings;
+        $this->googleYoutubeLiveStream        = new Google_Service_YouTube_LiveStream;
     }
 
     private function adjustDate(String $dateParam)
@@ -57,13 +64,13 @@ class Broadcast
         return $this;
     }
 
-    private function setSnippet($intialDate, $endDate, $titleEvent)
+    private function setSnippet()
     {
-        if(!is_null($endDate) && $endDate != "" && !empty($endDate)){
-            $this->liveBroadcastSnippet->setScheduledEndTime($this->adjustDate($endDate));
+        if(!is_null($this->endDate) && $this->endDate != "" && !empty($this->endDate)){
+            $this->liveBroadcastSnippet->setScheduledEndTime($this->adjustDate($this->endDate));
         }
-        $this->liveBroadcastSnippet->setScheduledStartTime($this->adjustDate($intialDate));
-        $this->liveBroadcastSnippet->setTitle($titleEvent);
+        $this->liveBroadcastSnippet->setScheduledStartTime($this->adjustDate($this->intialDate));
+        $this->liveBroadcastSnippet->setTitle($this->titleEvent);
         $this->liveBroadcast->setSnippet($this->liveBroadcastSnippet);
 
         return $this;
@@ -74,19 +81,21 @@ class Broadcast
      * @param $privacy
      * @return $this
      */
-    private function setLiveStatus($privacy)
+    private function setLiveStatus()
     {
-        $this->liveBroadcastStatus->setPrivacyStatus($privacy);
+        $this->liveBroadcastStatus->setPrivacyStatus($this->privacy);
         $this->liveBroadcast->setStatus($this->liveBroadcastStatus);
         $this->liveBroadcast->setKind('youtube#liveBroadcast');
 
         return $this;
     }
 
-    private function listVideo($youtube_event_id)
+    private function listVideo()
     {
-        $listResponse = $this->youtube->videos->listVideos("snippet", array('id' => $youtube_event_id));
+        $listResponse = $this->youtube->videos->listVideos("snippet", array('id' => $this->youtubeEventId));
         $this->video = $listResponse[0];
+
+        return $this;
     }
 
     private function creteEventBroadcast()
@@ -109,14 +118,8 @@ class Broadcast
         $this->privacy    = $privacy;
     }
 
-    public function createEvent($intialDate, $endDate, $titleEvent, $privacy, $objectYouTube)
+    private function setSnippetVideo()
     {
-        $this->setDefaultConfigurations($intialDate, $endDate, $titleEvent, $privacy, $objectYouTube);
-
-        $this->setLiveBroadcast()->setSnippet($intialDate, $endDate, $titleEvent)->setLiveStatus($privacy)->creteEventBroadcast();
-
-        $this->listVideo($this->youtubeEventId);
-
         $videoSnippet = $this->video['snippet'];
         $videoSnippet['tags'] = ['video'];
         $videoSnippet['defaultAudioLanguage'] = "pt-BR";
@@ -125,29 +128,60 @@ class Broadcast
         $this->video['snippet'] = $videoSnippet;
 
         $updateResponse = $this->youtube->videos->update("snippet", $this->video);
+
+        $this->googleYoutubeLiveStreamSnippet->setTitle($this->titleEvent);
+
         $this->response['video_response'] = $updateResponse;
+    }
 
-        //object of livestream resource title
-        $googleYoutubeLiveStreamSnippet = new Google_Service_YouTube_LiveStreamSnippet;
-        $googleYoutubeLiveStreamSnippet->setTitle($titleEvent);
+    private function configurationLiveCDN()
+    {
+        $this->googleYoutubeCdnSettings->setFormat("1080p");
+        $this->googleYoutubeCdnSettings->setIngestionType('rtmp');
 
-        $googleYoutubeCdnSettings = new Google_Service_YouTube_CdnSettings;
-        $googleYoutubeCdnSettings->setFormat("1080p");
-        $googleYoutubeCdnSettings->setIngestionType('rtmp');
+        return $this;
+    }
 
-        // API request inserts liveStream resource.
-        $googleYoutubeLiveStream = new Google_Service_YouTube_LiveStream;
-        $googleYoutubeLiveStream->setSnippet($googleYoutubeLiveStreamSnippet);
-        $googleYoutubeLiveStream->setCdn($googleYoutubeCdnSettings);
-        $googleYoutubeLiveStream->setKind('youtube#liveStream');
+    /**
+     * API request inserts liveStream resource.
+     * @return mixed
+     */
+    private function insertLiveStream()
+    {
+        $this->googleYoutubeLiveStream->setSnippet($this->googleYoutubeLiveStreamSnippet);
+        $this->googleYoutubeLiveStream->setCdn($this->googleYoutubeCdnSettings);
+        $this->googleYoutubeLiveStream->setKind('youtube#liveStream');
 
-        //execute the insert request [return an object that contains information about new stream]
-        $streamsResponse = $this->youtube->liveStreams->insert('snippet,cdn', $googleYoutubeLiveStream, array());
-        $this->response['stream_response'] = $streamsResponse;
+        $this->streamsResponse = $this->youtube->liveStreams->insert('snippet,cdn', $this->googleYoutubeLiveStream, array());
+        $this->response['stream_response'] = $this->streamsResponse;
+    }
 
-        //Bind the broadcast to the live stream
-        $bindBroadcastResponse = $this->youtube->liveBroadcasts->bind($this->broadcastsResponse['id'], 'id,contentDetails', ['streamId' => $streamsResponse['id'],]);
+    /**
+     * Bind the broadcast to the live stream
+     */
+    private function bindEvent()
+    {
+        $bindBroadcastResponse = $this->youtube->liveBroadcasts->bind($this->broadcastsResponse['id'], 'id,contentDetails', ['streamId' => $this->streamsResponse['id'],]);
         $this->response['bind_broadcast_response'] = $bindBroadcastResponse;
+    }
+
+    /**
+     * Create Event Live YouTube
+     * @param $intialDate
+     * @param $endDate
+     * @param $titleEvent
+     * @param $privacy
+     * @param $objectYouTube
+     * @return mixed
+     */
+    public function createEvent($intialDate, $endDate, $titleEvent, $privacy, $objectYouTube)
+    {
+        $this->setDefaultConfigurations($intialDate, $endDate, $titleEvent, $privacy, $objectYouTube);
+
+        $this->setLiveBroadcast()->setSnippet()->setLiveStatus()->creteEventBroadcast();
+        $this->listVideo()->setSnippetVideo();
+        $this->configurationLiveCDN()->insertLiveStream();
+        $this->bindEvent();
 
         return $this->response;
     }
