@@ -86,11 +86,11 @@ class Youtube
         return !empty($response->items);
     }
 
-    public function createEventRTMP(String $intialDate, String $endDate, String $titleEvent, String $privacy = 'unlisted')
+    public function createEventRTMP(String $intialDate, String $endDate, String $titleEvent, String $privacy = 'unlisted', $language = 'Portuguese (Brazil)')
     {
         $this->userToken();
 
-        $liveBroadcast = $this->setup->getClientBroadcasting($intialDate, $endDate, $titleEvent, $privacy, $this->youtube);
+        $liveBroadcast = $this->setup->getClientBroadcasting($intialDate, $endDate, $titleEvent, $privacy, $language, $this->youtube);
 
         return $liveBroadcast;
     }

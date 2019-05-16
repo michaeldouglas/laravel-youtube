@@ -9,6 +9,9 @@ use Google_Service_YouTube_LiveBroadcastStatus;
 use Google_Service_YouTube_CdnSettings;
 use Google_Service_YouTube_LiveStream;
 use Google_Service_YouTube_LiveStreamSnippet;
+use Google_Service_Exception;
+use Google_Exception;
+use Exception;
 use Carbon\Carbon;
 
 class Broadcast
@@ -27,6 +30,7 @@ class Broadcast
     private $titleEvent;
     private $endDate;
     private $response;
+    private $language;
     private $youtube;
     private $video;
     private $streamsResponse;
@@ -109,21 +113,22 @@ class Broadcast
         return $this;
     }
 
-    private function setDefaultConfigurations($intialDate, $endDate, $titleEvent, $privacy, $objectYouTube)
+    private function setDefaultConfigurations($intialDate, $endDate, $titleEvent, $privacy, $language, $objectYouTube)
     {
         $this->youtube    = $objectYouTube;
         $this->intialDate = $intialDate;
         $this->endDate    = $endDate;
         $this->titleEvent = $titleEvent;
         $this->privacy    = $privacy;
+        $this->language   = $language;
     }
 
     private function setSnippetVideo()
     {
         $videoSnippet = $this->video['snippet'];
         $videoSnippet['tags'] = ['video'];
-        $videoSnippet['defaultAudioLanguage'] = "pt-BR";
-        $videoSnippet['defaultLanguage'] = "pt-BR";
+        $videoSnippet['defaultAudioLanguage'] = $this->app->config->get('youtube.language')[$this->language];
+        $videoSnippet['defaultLanguage'] = $this->app->config->get('youtube.language')[$this->language];
 
         $this->video['snippet'] = $videoSnippet;
 
@@ -173,16 +178,27 @@ class Broadcast
      * @param $privacy
      * @param $objectYouTube
      * @return mixed
+     * @throws Google_Service_Exception
+     * @throws Google_Exception
+     * @throws Exception
      */
-    public function createEvent($intialDate, $endDate, $titleEvent, $privacy, $objectYouTube)
+    public function createEvent($intialDate, $endDate, $titleEvent, $privacy, $language, $objectYouTube)
     {
-        $this->setDefaultConfigurations($intialDate, $endDate, $titleEvent, $privacy, $objectYouTube);
+        try{
+            $this->setDefaultConfigurations($intialDate, $endDate, $titleEvent, $privacy, $language, $objectYouTube);
 
-        $this->setLiveBroadcast()->setSnippet()->setLiveStatus()->creteEventBroadcast();
-        $this->listVideo()->setSnippetVideo();
-        $this->configurationLiveCDN()->insertLiveStream();
-        $this->bindEvent();
+            $this->setLiveBroadcast()->setSnippet()->setLiveStatus()->creteEventBroadcast();
+            $this->listVideo()->setSnippetVideo();
+            $this->configurationLiveCDN()->insertLiveStream();
+            $this->bindEvent();
 
-        return $this->response;
+            return $this->response;
+        } catch ( Google_Service_Exception $e ) {
+            throw new Exception($e->getMessage(), 1);
+        } catch ( Google_Exception $e ) {
+            throw new Exception($e->getMessage(), 1);
+        } catch(Exception $e) {
+            throw new Exception($e->getMessage(), 1);
+        }
     }
 }

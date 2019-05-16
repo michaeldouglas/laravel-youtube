@@ -66,8 +66,22 @@ class Setup
         $this->client = $client;
     }
 
-    public function getClientBroadcasting(String $intialDate, String $endDate, String $titleEvent, String $privacy, $objectYouTube)
+    /**
+     * @param String $intialDate
+     * @param String $endDate
+     * @param String $titleEvent
+     * @param String $privacy
+     * @param String $language
+     * @param $objectYouTube
+     * @return mixed
+     * @throws Exception
+     */
+    public function getClientBroadcasting(String $intialDate, String $endDate, String $titleEvent, String $privacy, String $language, $objectYouTube)
     {
-        return $this->broadcast->createEvent($intialDate, $endDate, $titleEvent, $privacy, $objectYouTube);
+        try{
+            return $this->broadcast->createEvent($intialDate, $endDate, $titleEvent, $privacy, $language, $objectYouTube);
+        } catch (Exception $e){
+            throw new Exception($e->getMessage(), 1);
+        }
     }
 }
