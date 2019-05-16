@@ -76,10 +76,10 @@ class Setup
      * @return mixed
      * @throws Exception
      */
-    public function getClientBroadcasting(String $intialDate, String $endDate, String $titleEvent, String $privacy, String $language, $objectYouTube)
+    public function getClientBroadcasting(String $intialDate, String $endDate, String $titleEvent, String $privacy, String $language, String $tags, $objectYouTube)
     {
         try{
-            return $this->broadcast->createEvent($intialDate, $endDate, $titleEvent, $privacy, $language, $objectYouTube);
+            return $this->broadcast->createEvent($intialDate, $endDate, $titleEvent, $privacy, $language, $tags, $objectYouTube);
         } catch (Exception $e){
             throw new Exception($e->getMessage(), 1);
         }

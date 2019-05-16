@@ -12,7 +12,7 @@ use Google_Service_YouTube_LiveStreamSnippet;
 use Google_Service_Exception;
 use Google_Exception;
 use Exception;
-use Carbon\Carbon;
+use Laravel\Youtube\Filters\Filters;
 
 class Broadcast
 {
@@ -25,6 +25,7 @@ class Broadcast
     private $googleYoutubeLiveStream;
     private $broadcastsResponse;
     private $youtubeEventId;
+    private $tags;
     private $intialDate;
     private $privacy;
     private $titleEvent;
@@ -34,6 +35,8 @@ class Broadcast
     private $youtube;
     private $video;
     private $streamsResponse;
+
+    use Filters;
 
     public function __construct($app)
     {
@@ -45,13 +48,6 @@ class Broadcast
         $this->googleYoutubeLiveStreamSnippet = new Google_Service_YouTube_LiveStreamSnippet;
         $this->googleYoutubeCdnSettings       = new Google_Service_YouTube_CdnSettings;
         $this->googleYoutubeLiveStream        = new Google_Service_YouTube_LiveStream;
-    }
-
-    private function adjustDate(String $dateParam)
-    {
-        $dataFormated = Carbon::createFromFormat('Y-m-d H:i:s', $dateParam, $this->app->config->get('youtube.timezone'));
-        $dataFormated = ($dataFormated < Carbon::now($this->app->config->get('youtube.timezone'))) ? Carbon::now($this->app->config->get('youtube.timezone')) : $dataFormated;
-        return $dataFormated->toIso8601String();
     }
 
     private function setLiveBroadcast()
@@ -113,7 +109,7 @@ class Broadcast
         return $this;
     }
 
-    private function setDefaultConfigurations($intialDate, $endDate, $titleEvent, $privacy, $language, $objectYouTube)
+    private function setDefaultConfigurations($intialDate, $endDate, $titleEvent, $privacy, $language, $tags, $objectYouTube)
     {
         $this->youtube    = $objectYouTube;
         $this->intialDate = $intialDate;
@@ -121,12 +117,13 @@ class Broadcast
         $this->titleEvent = $titleEvent;
         $this->privacy    = $privacy;
         $this->language   = $language;
+        $this->tags       = $tags;
     }
 
     private function setSnippetVideo()
     {
         $videoSnippet = $this->video['snippet'];
-        $videoSnippet['tags'] = ['video'];
+        $videoSnippet['tags'] = $this->tags($this->tags);
         $videoSnippet['defaultAudioLanguage'] = $this->app->config->get('youtube.language')[$this->language];
         $videoSnippet['defaultLanguage'] = $this->app->config->get('youtube.language')[$this->language];
 
@@ -182,10 +179,10 @@ class Broadcast
      * @throws Google_Exception
      * @throws Exception
      */
-    public function createEvent($intialDate, $endDate, $titleEvent, $privacy, $language, $objectYouTube)
+    public function createEvent($intialDate, $endDate, $titleEvent, $privacy, $language, $tags, $objectYouTube)
     {
         try{
-            $this->setDefaultConfigurations($intialDate, $endDate, $titleEvent, $privacy, $language, $objectYouTube);
+            $this->setDefaultConfigurations($intialDate, $endDate, $titleEvent, $privacy, $language, $tags, $objectYouTube);
 
             $this->setLiveBroadcast()->setSnippet()->setLiveStatus()->creteEventBroadcast();
             $this->listVideo()->setSnippetVideo();
