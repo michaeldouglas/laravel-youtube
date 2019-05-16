@@ -4,12 +4,20 @@ namespace Laravel\Youtube;
 
 use Google_Client;
 use Google_Service_YouTube;
+use Google_Service_YouTube_VideoSnippet;
+use Google_Service_YouTube_VideoStatus;
+use Google_Service_YouTube_Video;
 
 use Laravel\Youtube\Configuration\Setup;
 use Laravel\Youtube\Database\Database;
+use Laravel\Youtube\Filters\Filters;
+use Laravel\Youtube\Video\Upload;
+use Exception;
 
 class Youtube
 {
+
+    use Filters;
 
     /**
      * Application Container
@@ -40,6 +48,13 @@ class Youtube
     protected $db;
 
     /**
+     * Upload Client
+     *
+     * @var Upload
+     */
+    protected $upload;
+
+    /**
      * Google YouTube
      *
      * @var \Google_Service_YouTube
@@ -55,6 +70,8 @@ class Youtube
         $this->client = $this->setup->getClient();
 
         $this->db = new Database();
+
+        $this->upload = new Upload();
 
         $this->youtube = new Google_Service_YouTube($this->client);
 
@@ -93,6 +110,43 @@ class Youtube
         $liveBroadcast = $this->setup->getClientBroadcasting($intialDate, $endDate, $titleEvent, $privacy, $language, $tags, $this->youtube);
 
         return $liveBroadcast;
+    }
+
+    public function uploadVideo(String $pathLocalVideo, array $dataVideo = [], $privacyVideo = 'public')
+    {
+        try {
+            $this->checkVideoExist($pathLocalVideo);
+
+            $this->userToken();
+
+            $video = $this->getVideoYouTube($dataVideo, $privacyVideo);
+
+            $this->upload->upload($this->client, $this->youtube, $video, $pathLocalVideo);
+
+            return $this->upload;
+        } catch (\Exception $e) {
+            throw new Exception($e->getMessage(), 1);
+        }
+    }
+
+    private function getVideoYouTube(array $data, String $privacyStatus, $id = false)
+    {
+        $snippetObject = new Google_Service_YouTube_VideoSnippet();
+        $snippet = $this->checkSnippet($snippetObject, $data);
+
+        $status = new Google_Service_YouTube_VideoStatus();
+        $status->privacyStatus = $privacyStatus;
+
+        $video = new Google_Service_YouTube_Video();
+
+        if ($id) {
+           $video->setId($id);
+        }
+
+        $video->setSnippet($snippet);
+        $video->setStatus($status);
+
+        return $video;
     }
 
     /**

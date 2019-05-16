@@ -72,6 +72,7 @@ class Setup
      * @param String $titleEvent
      * @param String $privacy
      * @param String $language
+     * @param String $tags
      * @param $objectYouTube
      * @return mixed
      * @throws Exception

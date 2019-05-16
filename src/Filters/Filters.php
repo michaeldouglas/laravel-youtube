@@ -3,6 +3,7 @@
 namespace Laravel\Youtube\Filters;
 
 use Carbon\Carbon;
+use Exception;
 
 trait Filters
 {
@@ -38,6 +39,31 @@ trait Filters
         } else {
             return [];
         }
+    }
+
+    private function checkVideoExist(String $pathVideo)
+    {
+        if(!file_exists($pathVideo)) {
+            throw new Exception("Video doest not exist. Path: {$pathVideo}");
+        }
+    }
+
+    private function checkSnippet($snippet, array $data)
+    {
+        if (array_key_exists('title', $data)){
+            $snippet->setTitle($data['title']);
+        }
+        if (array_key_exists('description', $data)){
+            $snippet->setDescription($data['description']);
+        }
+        if (array_key_exists('tags', $data)){
+            $snippet->setTags($data['tags']);
+        }
+        if (array_key_exists('category_id', $data)){
+            $snippet->setCategoryId($data['category_id']);
+        }
+
+        return $snippet;
     }
 
     private function adjustDate(String $dateParam)
