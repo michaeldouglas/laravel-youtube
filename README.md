@@ -133,7 +133,10 @@ e fornecer os parâmetros:
 
   - Data de inicio
   - Data de Termino
-  - Descrição do video
+  - Titulo do video
+  - **opcional:** Privacidade - O default da privacidade é: unlisted
+  - **opcional:** Linguagem - O default da linguagem é: Portuguese (Brazil)
+  - **opcional:** Tags - O default da tags é: michael,laravel-youtube
   
 Exemplo de uso:
 
@@ -141,6 +144,16 @@ Exemplo de uso:
 <?php 
 
 YouTube::createEventRTMP("2019-05-13 22:00:00", "2019-05-13 23:00:00", "Evento teste");
+```
+
+### Valores opcionais
+
+Exemplo de uso com os **valores opcionais**:
+
+```php
+<?php 
+
+YouTube::createEventRTMP("2019-05-13 22:00:00", "2019-05-13 23:00:00", "Evento teste", "unlisted", "Portuguese (Brazil)", "michael,laravel-youtube");
 ```
 
 Caso a criação seja feita com sucesso você terá como retorno o seguinte 
