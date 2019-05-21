@@ -55,7 +55,7 @@ Laravel\Youtube\YoutubeServiceProvider::class
 Em seu arquivo `config/app.php` adicione no array `aliases` a seguinte instrução:
 
 ```php
-Youtube' => Laravel\Youtube\Facades\Youtube::class
+Youtube => Laravel\Youtube\Facades\Youtube::class
 ```
     
 ## Criação do configurador
