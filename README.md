@@ -98,9 +98,9 @@ Ou você pode executar a migração que o projeto irá instalar e para isso bast
 php artisan migrate
 ```
 
-## subir um video no YouTube
+## subir video no YouTube
 
-** Atenção: Se o video for muito grande, provavelmente, você terá que aumentar o tempo limite do seu servidor! Para que não seja mostrado erro de TimeOut**
+**Atenção: Se o video for muito grande, provavelmente, você terá que aumentar o tempo limite do seu servidor! Para que não seja mostrado erro de TimeOut**
 
 Para subir o video para o `YouTube` basta que você diga para a `Laravel YouTube` onde o video encontra-se e também fornecer os parâmetros:
 
