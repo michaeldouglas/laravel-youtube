@@ -98,7 +98,7 @@ Ou você pode executar a migração que o projeto irá instalar e para isso bast
 php artisan migrate
 ```
 
-## subir video no YouTube
+## Subir video no YouTube
 
 **Atenção: Se o video for muito grande, provavelmente, você terá que aumentar o tempo limite do seu servidor, para que não seja mostrado erro de TimeOut!**
 
