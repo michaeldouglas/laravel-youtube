@@ -103,6 +103,23 @@ class Youtube
         return !empty($response->items);
     }
 
+    /**
+     * Delete video by ID
+     * @param String $id
+     * @return \expectedClass|\Google_Http_Request
+     * @throws Exception
+     */
+    public function delete(String $id)
+    {
+        $this->userToken();
+
+        if(!$this->checkExistVideo($id)){
+            throw new Exception("Not found video: {$id}");
+        }
+
+        return $this->youtube->videos->delete($id);
+    }
+
     public function createEventRTMP(String $intialDate, String $endDate, String $titleEvent, String $privacy = 'unlisted', $language = 'Portuguese (Brazil)', $tags = 'michael,laravel-youtube')
     {
         $this->userToken();
