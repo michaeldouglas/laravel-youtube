@@ -120,7 +120,7 @@ $path = public_path().'/video/video.mp4';
 $video = YouTube::uploadVideo($path, [
     'title'       => 'Laravel YouTube',
     'description' => 'Laravel YouTube',
-    'tags'	      => ['laravel', 'laravel-youtube', 'php', 'package'],
+    'tags'	  => ['laravel', 'laravel-youtube', 'php', 'package'],
     'category_id' => 10
 ], 'public');
 
