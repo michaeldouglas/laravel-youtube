@@ -100,7 +100,7 @@ php artisan migrate
 
 ## subir video no YouTube
 
-**Atenção: Se o video for muito grande, provavelmente, você terá que aumentar o tempo limite do seu servidor! Para que não seja mostrado erro de TimeOut**
+**Atenção: Se o video for muito grande, provavelmente, você terá que aumentar o tempo limite do seu servidor, para que não seja mostrado erro de TimeOut!**
 
 Para subir o video para o `YouTube` basta que você diga para a `Laravel YouTube` onde o video encontra-se e também fornecer os parâmetros:
 
