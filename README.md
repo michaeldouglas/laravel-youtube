@@ -128,7 +128,8 @@ return ["details" => $detailsVideo];
 
 ## Excluir video
 
-A operação para excluir um video é bem simples basta fornecer o identificador do video e chamar o método `excluir()`. 
+A operação para excluir um video é bem simples basta fornecer o identificador do video e chamar o método `excluir()`.
+
 Veja a seguir um exemplo:
 
 ```php
