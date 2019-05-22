@@ -104,11 +104,11 @@ php artisan migrate
 
 Para subir o video para o `YouTube` basta que você diga para a `Laravel YouTube` onde o video encontra-se e também fornecer os parâmetros:
 
-  - title - Título do video
-  - description - descrição do video
-  - tags
-  - category_id - Em qual categoria o seu video será colocado.
-  - E por último a privacidade do video
+  - `title` - Título do video
+  - `description` - descrição do video
+  - `tags`
+  - `category_id` - Em qual categoria o seu video será colocado.
+  - E por último a `privacidade` do video
     
 Veja a seguir um exemplo de como subir um video para o YouTube"
 
@@ -175,12 +175,12 @@ return ["excluir" => $video];
 Para criar um evento Ao Vivo, basta chamado o método `createEventRTMP()`
 e fornecer os parâmetros:
 
-  -   - ta de inicio
-  - Data de Termino
-  - Titulo do video
-  - **opcional:** Privacidade - O default da privacidade é: unlisted
-  - **opcional:** Linguagem - O default da linguagem é: Portuguese (Brazil)
-  - **opcional:** Tags - O default da tags é: michael,laravel-youtube
+  - `Data de inicio`
+  - `Data de Termino`
+  - `Titulo do video`
+  - **opcional:** `Privacidade` - O default da privacidade é: unlisted
+  - **opcional:** `Linguagem` - O default da linguagem é: Portuguese (Brazil)
+  - **opcional:** `Tags` - O default da tags é: michael,laravel-youtube
   
 Exemplo de uso:
 
