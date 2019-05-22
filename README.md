@@ -98,6 +98,35 @@ Ou você pode executar a migração que o projeto irá instalar e para isso bast
 php artisan migrate
 ```
 
+## subir um video no YouTube
+
+** Atenção: Se o video for muito grande, provavelmente, você terá que aumentar o tempo limite do seu servidor! Para que não seja mostrado erro de TimeOut**
+
+Para subir o video para o `YouTube` basta que você diga para a `Laravel YouTube` onde o video encontra-se e também fornecer os parâmetros:
+
+    - title - Título do video
+    - description - descrição do video
+    - tags
+    - category_id - Em qual categoria o seu video será colocado.
+    - E por último a privacidade do video
+    
+Veja a seguir um exemplo de como subir um video para o YouTube"
+
+```php
+<?php
+
+$path = public_path().'/video/video.mp4';
+
+$video = YouTube::uploadVideo($path, [
+    'title'       => 'Laravel YouTube',
+    'description' => 'Laravel YouTube',
+    'tags'	      => ['laravel', 'laravel-youtube', 'php', 'package'],
+    'category_id' => 10
+], 'public');
+
+return ["idVideo" => $video->getIdVideo(), "details" => $video->getSnippet()];
+```
+
 ## Verificar se o video existe
 
 Para verificar se um video existe, basta, fornecer o id dele para 
