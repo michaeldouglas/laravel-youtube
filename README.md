@@ -135,7 +135,7 @@ Veja a seguir um exemplo:
 <?php 
 
 $id = "O ID DO VIDEO";
-$video = YouTube::excluir($id);
+$video = YouTube::delete($id);
 
 return ["excluir" => $video];
 ```
