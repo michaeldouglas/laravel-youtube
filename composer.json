@@ -35,7 +35,10 @@
         "bin-dir": "bin/"
     },
     "archive": {
-        "exclude": ["/example", "tests"]
+        "exclude": ["/example/*", "/tests/*"]
+    },
+    "suggest": {
+        "michael/laravel-youtube": "Attention if your video is large, probably, you will have increase your timeout in your web server. In order not to have problem of time out in your web server."
     },
     "extra": {
         "laravel": {
