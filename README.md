@@ -195,7 +195,7 @@ YouTube::createEventRTMP("2019-05-13 22:00:00", "2019-05-13 23:00:00", "Evento t
 Exemplo de uso com os **valores opcionais**:
 
 ```php
-<?php 
+<?php
 
 YouTube::createEventRTMP("2019-05-13 22:00:00", "2019-05-13 23:00:00", "Evento teste", "unlisted", "Portuguese (Brazil)", "michael,laravel-youtube");
 ```
@@ -209,7 +209,8 @@ Para listar os eventos Ao Vivo, basta chamar o método `listEventsBroadcasts()`,
 da seguinte maneira:
 
 ```php
-<?php 
+<?php
+
 $video = YouTube::listEventsBroadcasts();
 
 return ["list" => $video];
