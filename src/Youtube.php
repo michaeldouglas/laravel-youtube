@@ -11,6 +11,7 @@ use Google_Service_YouTube_Video;
 use Laravel\Youtube\Configuration\Setup;
 use Laravel\Youtube\Database\Database;
 use Laravel\Youtube\Filters\Filters;
+use Laravel\Youtube\Video\Search;
 use Laravel\Youtube\Video\Upload;
 use Exception;
 
@@ -55,6 +56,13 @@ class Youtube
     protected $upload;
 
     /**
+     * Search Client
+     *
+     * @var Upload
+     */
+    protected $searchClient;
+
+    /**
      * Google YouTube
      *
      * @var \Google_Service_YouTube
@@ -72,6 +80,8 @@ class Youtube
         $this->db = new Database();
 
         $this->upload = new Upload();
+
+        $this->searchClient = new Search();
 
         $this->youtube = new Google_Service_YouTube($this->client);
 
@@ -232,6 +242,11 @@ class Youtube
                 $this->db->saveToken($this->client->getAccessToken());
             }
         }
+    }
+
+    public function search(String $query, $maxResults = 25)
+    {
+        return $this->searchClient->search($this->youtube, $query, $maxResults);
     }
 
     public function AuthUser()
