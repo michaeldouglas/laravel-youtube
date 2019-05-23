@@ -85,4 +85,18 @@ class Setup
             throw new Exception($e->getMessage(), 1);
         }
     }
+
+    /**
+     * @param \Google_Service_YouTube $objectYouTube
+     * @return mixed
+     * @throws Exception
+     */
+    public function listEventsBroadcasting(\Google_Service_YouTube $objectYouTube)
+    {
+        try{
+            return $this->broadcast->listEventsBroadcasts($objectYouTube);
+        } catch (Exception $e){
+            throw new Exception($e->getMessage(), 1);
+        }
+    }
 }

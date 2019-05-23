@@ -40,14 +40,14 @@ class Broadcast
 
     public function __construct($app)
     {
-        $this->app                            = $app;
-        $this->liveBroadcast                  = new Google_Service_YouTube_LiveBroadcast();
-        $this->liveBroadcastContentDetails    = new Google_Service_YouTube_LiveBroadcastContentDetails();
-        $this->liveBroadcastSnippet           = new Google_Service_YouTube_LiveBroadcastSnippet();
-        $this->liveBroadcastStatus            = new Google_Service_YouTube_LiveBroadcastStatus();
+        $this->app = $app;
+        $this->liveBroadcast = new Google_Service_YouTube_LiveBroadcast();
+        $this->liveBroadcastContentDetails = new Google_Service_YouTube_LiveBroadcastContentDetails();
+        $this->liveBroadcastSnippet = new Google_Service_YouTube_LiveBroadcastSnippet();
+        $this->liveBroadcastStatus = new Google_Service_YouTube_LiveBroadcastStatus();
         $this->googleYoutubeLiveStreamSnippet = new Google_Service_YouTube_LiveStreamSnippet;
-        $this->googleYoutubeCdnSettings       = new Google_Service_YouTube_CdnSettings;
-        $this->googleYoutubeLiveStream        = new Google_Service_YouTube_LiveStream;
+        $this->googleYoutubeCdnSettings = new Google_Service_YouTube_CdnSettings;
+        $this->googleYoutubeLiveStream = new Google_Service_YouTube_LiveStream;
     }
 
     private function setLiveBroadcast()
@@ -66,7 +66,7 @@ class Broadcast
 
     private function setSnippet()
     {
-        if(!is_null($this->endDate) && $this->endDate != "" && !empty($this->endDate)){
+        if (!is_null($this->endDate) && $this->endDate != "" && !empty($this->endDate)) {
             $this->liveBroadcastSnippet->setScheduledEndTime($this->adjustDate($this->endDate));
         }
         $this->liveBroadcastSnippet->setScheduledStartTime($this->adjustDate($this->intialDate));
@@ -111,13 +111,13 @@ class Broadcast
 
     private function setDefaultConfigurations($intialDate, $endDate, $titleEvent, $privacy, $language, $tags, $objectYouTube)
     {
-        $this->youtube    = $objectYouTube;
+        $this->youtube = $objectYouTube;
         $this->intialDate = $intialDate;
-        $this->endDate    = $endDate;
+        $this->endDate = $endDate;
         $this->titleEvent = $titleEvent;
-        $this->privacy    = $privacy;
-        $this->language   = $language;
-        $this->tags       = $tags;
+        $this->privacy = $privacy;
+        $this->language = $language;
+        $this->tags = $tags;
     }
 
     private function setSnippetVideo()
@@ -181,7 +181,7 @@ class Broadcast
      */
     public function createEvent($intialDate, $endDate, $titleEvent, $privacy, $language, $tags, $objectYouTube)
     {
-        try{
+        try {
             $this->setDefaultConfigurations($intialDate, $endDate, $titleEvent, $privacy, $language, $tags, $objectYouTube);
 
             $this->setLiveBroadcast()->setSnippet()->setLiveStatus()->creteEventBroadcast();
@@ -190,11 +190,34 @@ class Broadcast
             $this->bindEvent();
 
             return $this->response;
-        } catch ( Google_Service_Exception $e ) {
+        } catch (Google_Service_Exception $e) {
             throw new Exception($e->getMessage(), 1);
-        } catch ( Google_Exception $e ) {
+        } catch (Google_Exception $e) {
             throw new Exception($e->getMessage(), 1);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), 1);
+        }
+    }
+
+    /**
+     * List events Broadcast
+     * @param $objectYouTube
+     * @return mixed
+     * @throws Exception
+     */
+    public function listEventsBroadcasts($objectYouTube)
+    {
+        try {
+            return $objectYouTube->liveBroadcasts->listLiveBroadcasts(
+                'id,snippet',
+                [
+                    'mine' => 'true',
+                ]
+            )['items'];
+
+        } catch (Google_Service_Exception $e) {
+            throw new Exception($e->getMessage(), 1);
+        } catch (Google_Exception $e) {
             throw new Exception($e->getMessage(), 1);
         }
     }

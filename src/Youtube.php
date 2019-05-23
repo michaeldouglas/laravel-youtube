@@ -104,6 +104,20 @@ class Youtube
     }
 
     /**
+     * List Events Broadcasts
+     * @throws Exception
+     * @return array
+     */
+    public function listEventsBroadcasts()
+    {
+        try {
+            return $this->setup->listEventsBroadcasting($this->youtube);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), 1);
+        }
+    }
+
+    /**
      * Delete video by ID
      * @param String $id
      * @return boolean
@@ -113,11 +127,11 @@ class Youtube
     {
         $this->userToken();
 
-        if(!$this->checkExistVideo($id)){
+        if (!$this->checkExistVideo($id)) {
             throw new Exception("Not found video: {$id}");
         }
 
-        return (bool) $this->youtube->videos->delete($id);
+        return (bool)$this->youtube->videos->delete($id);
     }
 
     public function createEventRTMP(String $intialDate, String $endDate, String $titleEvent, String $privacy = 'unlisted', $language = 'Portuguese (Brazil)', $tags = 'michael,laravel-youtube')
@@ -129,6 +143,14 @@ class Youtube
         return $liveBroadcast;
     }
 
+    /**
+     * Upload video for YouTube
+     * @param String $pathLocalVideo
+     * @param array $dataVideo
+     * @param string $privacyVideo
+     * @return Upload
+     * @throws Exception
+     */
     public function uploadVideo(String $pathLocalVideo, array $dataVideo = [], $privacyVideo = 'public')
     {
         try {
@@ -157,7 +179,7 @@ class Youtube
         $video = new Google_Service_YouTube_Video();
 
         if ($id) {
-           $video->setId($id);
+            $video->setId($id);
         }
 
         $video->setSnippet($snippet);
@@ -193,9 +215,9 @@ class Youtube
      */
     private function userToken()
     {
-        
+
         if (is_null($accessToken = $this->client->getAccessToken())) {
-            if($this->app->config->get('youtube.redirect_auth')){
+            if ($this->app->config->get('youtube.redirect_auth')) {
                 $uri = $this->client->getRedirectUri();
                 header("Location: $uri");
             } else {
@@ -203,11 +225,9 @@ class Youtube
             }
         }
 
-        if($this->client->isAccessTokenExpired())
-        {
+        if ($this->client->isAccessTokenExpired()) {
 
-            if (array_key_exists('refresh_token', $accessToken))
-            {
+            if (array_key_exists('refresh_token', $accessToken)) {
                 $this->client->refreshToken($accessToken['refresh_token']);
                 $this->db->saveToken($this->client->getAccessToken());
             }

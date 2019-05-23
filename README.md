@@ -1,4 +1,4 @@
-## Laravel YouTube - 0.0.20
+## Laravel YouTube - 0.0.21
 
 [![Latest Stable Version](https://poser.pugx.org/michael/laravel-youtube/v/stable)](https://packagist.org/packages/michael/laravel-youtube)
 [![Total Downloads](https://poser.pugx.org/michael/laravel-youtube/downloads)](https://packagist.org/packages/michael/laravel-youtube)
@@ -28,7 +28,7 @@ vídeos no YouTube e criar o **RTMP** e **chave de transmissão** para uma trans
 Abra o arquivo `composer.json` e insira a seguinte instrução:
  
      "require": {
-         "michael/laravel-youtube": "0.0.20"
+         "michael/laravel-youtube": "0.0.21"
      }
      
      
