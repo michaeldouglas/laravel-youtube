@@ -201,4 +201,18 @@ YouTube::createEventRTMP("2019-05-13 22:00:00", "2019-05-13 23:00:00", "Evento t
 ```
 
 Caso a criação seja feita com sucesso você terá como retorno um 
-**Json** com todos os valores do evento.
+`Json` com todos os valores do evento.
+
+## Lista de eventos Ao Vivo
+
+Para listar os eventos Ao Vivo, basta chamar o método `listEventsBroadcasts()`, 
+da seguinte maneira:
+
+```php
+<?php 
+$video = YouTube::listEventsBroadcasts();
+
+return ["list" => $video];
+```
+
+Caso exista uma lista de videos, então, será retornando um `Json` com todos os eventos.
