@@ -170,6 +170,30 @@ $video = YouTube::delete($id);
 return ["excluir" => $video];
 ```
 
+## Procurar videos
+
+Para realizar busca de videos no YouTube você pode utilizar o método: `search()`
+e passar dois parâmetros, que serão:
+
+  - `Query` - Termo que será buscado
+  - `maxResults` - máximo de resultados
+ 
+O método `search()` irá retornar:
+
+  - Videos que batém com o termo
+  - playlist que batém com o termo
+  - canais - que batém com o termo
+  
+Veja a seguir um exemplo de uso:
+
+```php
+<?php 
+
+$result = YouTube::search('TERMO BUSCADO', 'MAXIO DE RESULTADOS');
+
+return ['lista' => $result];
+```
+
 ## Criação de eventos Ao Vivo
 
 Para criar um evento Ao Vivo, basta chamado o método `createEventRTMP()`
