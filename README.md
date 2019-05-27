@@ -189,7 +189,7 @@ Veja a seguir um exemplo de uso:
 ```php
 <?php 
 
-$result = YouTube::search('TERMO BUSCADO', 'MAXIO DE RESULTADOS');
+$result = YouTube::search('TERMO BUSCADO', 'MAXIMO DE RESULTADOS');
 
 return ['lista' => $result];
 ```
