@@ -12,6 +12,7 @@ use Laravel\Youtube\Configuration\Setup;
 use Laravel\Youtube\Database\Database;
 use Laravel\Youtube\Filters\Filters;
 use Laravel\Youtube\Video\Search;
+use Laravel\Youtube\Video\Update;
 use Laravel\Youtube\Video\Upload;
 use Exception;
 
@@ -56,6 +57,13 @@ class Youtube
     protected $upload;
 
     /**
+     * Update Client
+     *
+     * @var Upload
+     */
+    protected $update;
+
+    /**
      * Search Client
      *
      * @var Upload
@@ -80,6 +88,8 @@ class Youtube
         $this->db = new Database();
 
         $this->upload = new Upload();
+
+        $this->update = new Update();
 
         $this->searchClient = new Search();
 
@@ -173,6 +183,29 @@ class Youtube
             $this->upload->upload($this->client, $this->youtube, $video, $pathLocalVideo);
 
             return $this->upload;
+        } catch (\Exception $e) {
+            throw new Exception($e->getMessage(), 1);
+        }
+    }
+
+    /**
+     * @param $id
+     * @param array $dataVideo
+     * @param string $privacyVideo
+     * @return Update|Upload
+     * @throws Exception
+     */
+    public function updateVideo($id, array $dataVideo = [], $privacyVideo = 'public')
+    {
+        try {
+
+            $this->userToken();
+
+            $video = $this->getVideoYouTube($dataVideo, $privacyVideo, $id);
+
+            $this->update->update($video, $this->youtube);
+
+            return $this->update;
         } catch (\Exception $e) {
             throw new Exception($e->getMessage(), 1);
         }

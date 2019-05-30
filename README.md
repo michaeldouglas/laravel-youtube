@@ -72,6 +72,26 @@ Se tudo ocorreu bem, a seguinte mensagem sera exibida:
 Copied File [/vendor/michael/laravel-youtube/config/youtube.php] To [/config/youtube.php]
 ```
 
+## Lista de categoria YouTube
+
+Caso você precise, a lista de categorias do YouTube é essa:
+    
+    1 Film & Animation - File e animação
+    2 Autos & Vehicles - Automóveis
+    10 Music - Música
+    15 Pets & Animals - Animais
+    17 Sports - Esportes
+    19 Travel & Events - Viagens e eventos
+    20 Gaming - Jogos
+    22 People & Blogs - Pessoas e blogs
+    23 Comedy - Comédia
+    24 Entertainment - Entretenimento
+    25 News & Politics - Notícias e política
+    26 How-to & Style - Instruções e estilo
+    27 Education - Educação
+    28 Science & Technology - Ciência e tecnologia
+    29 Non-profits & Activism - Sem fins lucrativos e ativismo
+
 ## Criação da tabela de tokens do YouTube
 
 **Atenção:** Essa tabela é essencial para o funcionamento da biblioteca pois

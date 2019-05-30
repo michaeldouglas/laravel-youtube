@@ -26,6 +26,14 @@ class Upload
         return $this->snippet;
     }
 
+    /**
+     * @param $client
+     * @param $youtube
+     * @param $video
+     * @param $pathLocalVideo
+     * @return $this
+     * @throws Exception
+     */
     public function upload($client, $youtube, $video, $pathLocalVideo)
     {
         try {
