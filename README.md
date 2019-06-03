@@ -130,7 +130,7 @@ Para subir o video para o `YouTube` basta que você diga para a `Laravel YouTube
   - `category_id` - Em qual categoria o seu video será colocado.
   - E por último a `privacidade` do video
     
-Veja a seguir um exemplo de como subir um video para o YouTube"
+Veja a seguir um exemplo de como subir um video para o YouTube:
 
 ```php
 <?php
@@ -145,6 +145,32 @@ $video = YouTube::uploadVideo($path, [
 ], 'public');
 
 return ["idVideo" => $video->getIdVideo(), "details" => $video->getSnippet()];
+```
+
+## Atualizar video no YouTube
+
+A atualização é bem simples e os parâmetros para atualização serão parecidos com os de subir o video:
+
+  - `title` - Título do video
+  - `description` - descrição do video
+  - `tags`
+  - `category_id` - Em qual categoria o seu video será colocado.
+  - E por último a `privacidade` do video
+  
+Veja a seguir um exemplo de como editar um video no YouTube:
+
+```php
+<?php
+
+$id = "ID DO VIDEO";
+$video = YouTube::updateVideo($id, [
+    'title'       => 'Laravel YouTube',
+    'description' => 'Laravel YouTube',
+    'tags'	      => ['laravel', 'laravel-youtube', 'php', 'package'],
+    'category_id' => 23
+], 'public');
+
+return $video->getDataUpdate();
 ```
 
 ## Verificar se o video existe
