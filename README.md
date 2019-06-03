@@ -166,7 +166,7 @@ $id = "ID DO VIDEO";
 $video = YouTube::updateVideo($id, [
     'title'       => 'Laravel YouTube',
     'description' => 'Laravel YouTube',
-    'tags'	      => ['laravel', 'laravel-youtube', 'php', 'package'],
+    'tags'	  => ['laravel', 'laravel-youtube', 'php', 'package'],
     'category_id' => 23
 ], 'public');
 
