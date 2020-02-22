@@ -15,6 +15,8 @@ class CreateYoutubeAccessTokensTable extends Migration
         Schema::create('youtubeTokens', function(Blueprint $table)
         {
             $table->increments('id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->text('access_token');
             $table->timestamp('created_at');
             $table->softDeletes();
@@ -27,6 +29,6 @@ class CreateYoutubeAccessTokensTable extends Migration
      */
     public function down()
     {
-        Schema::drop('youtubeTokens');
+        Schema::dropIfExists('youtubeTokens');
     }
 }

@@ -176,7 +176,7 @@ class Youtube
         try {
             $this->checkVideoExist($pathLocalVideo);
 
-            $this->userToken();
+            //$this->userToken();
 
             $video = $this->getVideoYouTube($dataVideo, $privacyVideo);
 
