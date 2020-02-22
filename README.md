@@ -1,4 +1,4 @@
-## Laravel YouTube - 0.0.21
+## Laravel YouTube - 0.0.26
 
 [![Latest Stable Version](https://poser.pugx.org/michael/laravel-youtube/v/stable)](https://packagist.org/packages/michael/laravel-youtube)
 [![Total Downloads](https://poser.pugx.org/michael/laravel-youtube/downloads)](https://packagist.org/packages/michael/laravel-youtube)
@@ -10,37 +10,35 @@
 
 **Atention:** `Documentation in english please` [click for here](README-EN.md)
 
-O **laravel-youtube** consome a API do **YouTube** e prove uma forma simples de 
-gerar e manipular seus videos no YouTube. 
+O **laravel-youtube** consome a API do **YouTube** e prove uma forma simples de
+gerar e manipular seus videos no YouTube.
 
-Também é capaz de devolver estatísticas, relatórios relacionados aos seus 
+Também é capaz de devolver estatísticas, relatórios relacionados aos seus
 vídeos no YouTube e criar o **RTMP** e **chave de transmissão** para uma transmissão
- ao vivo.
+ao vivo.
 
 ## Compatibilidade
 
- PHP >= 7.1
- Laravel 5.x
- 
- 
- ## Instalação
- 
+PHP >= 7.1
+Laravel 5.x
+
+## Instalação
+
 Abra o arquivo `composer.json` e insira a seguinte instrução:
- 
+
      "require": {
          "michael/laravel-youtube": "0.0.21"
      }
-     
-     
+
+
+
 Após inserir no require a `Laravel YouTube`, você deverá executar o comando:
 
     composer update
-    
-    
+
 Ou execute o comando:
 
     composer require michael/laravel-youtube
-    
 
 ## Configuração do Service Provider
 
@@ -57,7 +55,7 @@ Em seu arquivo `config/app.php` adicione no array `aliases` a seguinte instruç�
 ```php
 Youtube => Laravel\Youtube\Facades\Youtube::class
 ```
-    
+
 ## Criação do configurador
 
 Agora você irá executar o comando:
@@ -75,22 +73,22 @@ Copied File [/vendor/michael/laravel-youtube/config/youtube.php] To [/config/you
 ## Lista de categoria YouTube
 
 Caso você precise, a lista de categorias do YouTube é essa:
-    
-    1 Film & Animation - File e animação
-    2 Autos & Vehicles - Automóveis
-    10 Music - Música
-    15 Pets & Animals - Animais
-    17 Sports - Esportes
-    19 Travel & Events - Viagens e eventos
-    20 Gaming - Jogos
-    22 People & Blogs - Pessoas e blogs
-    23 Comedy - Comédia
-    24 Entertainment - Entretenimento
-    25 News & Politics - Notícias e política
-    26 How-to & Style - Instruções e estilo
-    27 Education - Educação
-    28 Science & Technology - Ciência e tecnologia
-    29 Non-profits & Activism - Sem fins lucrativos e ativismo
+  
+ 1 Film & Animation - File e animação
+2 Autos & Vehicles - Automóveis
+10 Music - Música
+15 Pets & Animals - Animais
+17 Sports - Esportes
+19 Travel & Events - Viagens e eventos
+20 Gaming - Jogos
+22 People & Blogs - Pessoas e blogs
+23 Comedy - Comédia
+24 Entertainment - Entretenimento
+25 News & Politics - Notícias e política
+26 How-to & Style - Instruções e estilo
+27 Education - Educação
+28 Science & Technology - Ciência e tecnologia
+29 Non-profits & Activism - Sem fins lucrativos e ativismo
 
 ## Criação da tabela de tokens do YouTube
 
@@ -98,9 +96,8 @@ Caso você precise, a lista de categorias do YouTube é essa:
 com ela a `laravel-youtube` será capaz de armazenar os tokens retornados
 do Google.
 
-Caso você prefira criar a tabela de `tokens` sem utilizar as migrações do 
+Caso você prefira criar a tabela de `tokens` sem utilizar as migrações do
 Laravel, segue o `SQL`:
-
 
 ```sql
 CREATE TABLE `direct`.`youtubeTokens` (
@@ -124,12 +121,12 @@ php artisan migrate
 
 Para subir o video para o `YouTube` basta que você diga para a `Laravel YouTube` onde o video encontra-se e também fornecer os parâmetros:
 
-  - `title` - Título do video
-  - `description` - descrição do video
-  - `tags`
-  - `category_id` - Em qual categoria o seu video será colocado.
-  - E por último a `privacidade` do video
-    
+- `title` - Título do video
+- `description` - descrição do video
+- `tags`
+- `category_id` - Em qual categoria o seu video será colocado.
+- E por último a `privacidade` do video
+
 Veja a seguir um exemplo de como subir um video para o YouTube:
 
 ```php
@@ -151,12 +148,12 @@ return ["idVideo" => $video->getIdVideo(), "details" => $video->getSnippet()];
 
 A atualização é bem simples e os parâmetros para atualização serão parecidos com os de subir o video:
 
-  - `title` - Título do video
-  - `description` - descrição do video
-  - `tags`
-  - `category_id` - Em qual categoria o seu video será colocado.
-  - E por último a `privacidade` do video
-  
+- `title` - Título do video
+- `description` - descrição do video
+- `tags`
+- `category_id` - Em qual categoria o seu video será colocado.
+- E por último a `privacidade` do video
+
 Veja a seguir um exemplo de como editar um video no YouTube:
 
 ```php
@@ -175,11 +172,11 @@ return $video->getDataUpdate();
 
 ## Verificar se o video existe
 
-Para verificar se um video existe, basta, fornecer o id dele para 
+Para verificar se um video existe, basta, fornecer o id dele para
 o método `checkExistVideo()`, da seguinte maneira:
 
 ```php
-<?php 
+<?php
 
 $id = "O ID DO VIDEO";
 $existVideo = YouTube::checkExistVideo($id);
@@ -189,11 +186,11 @@ return ['status' => $existVideo];
 
 ## Obter detalhes do video
 
-Para obter detalhes de um video, basta, fornecer o id dele para 
+Para obter detalhes de um video, basta, fornecer o id dele para
 o método `checkExistVideo()`, da seguinte maneira:
 
 ```php
-<?php 
+<?php
 
 $id = "O ID DO VIDEO";
 $existVideo = YouTube::getDetailsVideo($id);
@@ -208,7 +205,7 @@ A operação para excluir um video é bem simples basta fornecer o identificador
 Veja a seguir um exemplo:
 
 ```php
-<?php 
+<?php
 
 $id = "O ID DO VIDEO";
 $video = YouTube::delete($id);
@@ -221,19 +218,19 @@ return ["excluir" => $video];
 Para realizar busca de videos no YouTube você pode utilizar o método: `search()`
 e passar dois parâmetros, que serão:
 
-  - `Query` - Termo que será buscado
-  - `maxResults` - máximo de resultados
- 
+- `Query` - Termo que será buscado
+- `maxResults` - máximo de resultados
+
 O método `search()` irá retornar:
 
-  - Videos que batém com o termo
-  - playlist que batém com o termo
-  - canais - que batém com o termo
-  
+- Videos que batém com o termo
+- playlist que batém com o termo
+- canais - que batém com o termo
+
 Veja a seguir um exemplo de uso:
 
 ```php
-<?php 
+<?php
 
 $result = YouTube::search('TERMO BUSCADO', 'MAXIMO DE RESULTADOS');
 
@@ -245,17 +242,17 @@ return ['lista' => $result];
 Para criar um evento Ao Vivo, basta chamado o método `createEventRTMP()`
 e fornecer os parâmetros:
 
-  - `Data de inicio`
-  - `Data de Termino`
-  - `Titulo do video`
-  - **opcional:** `Privacidade` - O default da privacidade é: unlisted
-  - **opcional:** `Linguagem` - O default da linguagem é: Portuguese (Brazil)
-  - **opcional:** `Tags` - O default da tags é: michael,laravel-youtube
-  
+- `Data de inicio`
+- `Data de Termino`
+- `Titulo do video`
+- **opcional:** `Privacidade` - O default da privacidade é: unlisted
+- **opcional:** `Linguagem` - O default da linguagem é: Portuguese (Brazil)
+- **opcional:** `Tags` - O default da tags é: michael,laravel-youtube
+
 Exemplo de uso:
 
 ```php
-<?php 
+<?php
 
 YouTube::createEventRTMP("2019-05-13 22:00:00", "2019-05-13 23:00:00", "Evento teste");
 ```
@@ -270,12 +267,12 @@ Exemplo de uso com os **valores opcionais**:
 YouTube::createEventRTMP("2019-05-13 22:00:00", "2019-05-13 23:00:00", "Evento teste", "unlisted", "Portuguese (Brazil)", "michael,laravel-youtube");
 ```
 
-Caso a criação seja feita com sucesso você terá como retorno um 
+Caso a criação seja feita com sucesso você terá como retorno um
 `Json` com todos os valores do evento.
 
 ## Lista de eventos Ao Vivo
 
-Para listar os eventos Ao Vivo, basta chamar o método `listEventsBroadcasts()`, 
+Para listar os eventos Ao Vivo, basta chamar o método `listEventsBroadcasts()`,
 da seguinte maneira:
 
 ```php
